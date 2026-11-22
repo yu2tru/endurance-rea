@@ -1,0 +1,16 @@
+# Old endurance-rea.com URLs -> new pages (301)
+/about                 /about/                                          301
+/tenant-advocate       /services/tenant-representation/                 301
+/landlord-representation /services/landlord-representation/            301
+/contact-us            /about/                                          301
+/contact-us-           /contact/                                        301
+/join-us               /about/                                          301
+/pulse-perspective     /insights/                                       301
+/blog                  /insights/                                       301
+/blog/post/2358641/*   /insights/tribeca-prep-leases-116-nassau-street/ 301
+/blog/post/2332136/*   /insights/self-help-clause-commercial-lease-nyc/ 301
+/blog/post/2270447/*   /insights/why-sndas-matter-to-tenants/           301
+/blog/post/2337620/*   /insights/lessons-from-a-landlords-troubles/     301
+/blog/post/2272979/*   /insights/renewals-shrinking-ti-allowances/      301
+/blog/*                /insights/                                       301
+/home                  /                                                301
