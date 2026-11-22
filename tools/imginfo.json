@@ -286,5 +286,197 @@
    1600,
    1068
   ]
+ },
+ "atlas-statue-rockefeller-center-manhattan": {
+  "sizes": [
+   [
+    640,
+    853
+   ],
+   [
+    1280,
+    1707
+   ],
+   [
+    1536,
+    2048
+   ]
+  ],
+  "jpg": [
+   1200,
+   1600
+  ]
+ },
+ "client-strategy-meeting-nyc-office": {
+  "sizes": [
+   [
+    640,
+    480
+   ],
+   [
+    1280,
+    960
+   ],
+   [
+    1920,
+    1440
+   ]
+  ],
+  "jpg": [
+   1600,
+   1200
+  ]
+ },
+ "handshake-commercial-lease-agreement-nyc": {
+  "sizes": [
+   [
+    500,
+    334
+   ],
+   [
+    500,
+    334
+   ],
+   [
+    500,
+    334
+   ]
+  ],
+  "jpg": [
+   500,
+   334
+  ]
+ },
+ "lease-review-notes-tenant-representation": {
+  "sizes": [
+   [
+    640,
+    427
+   ],
+   [
+    1280,
+    853
+   ],
+   [
+    1680,
+    1120
+   ]
+  ],
+  "jpg": [
+   1600,
+   1067
+  ]
+ },
+ "tenant-landlord-handshake-lease-signing": {
+  "sizes": [
+   [
+    640,
+    427
+   ],
+   [
+    1280,
+    854
+   ],
+   [
+    1504,
+    1004
+   ]
+  ],
+  "jpg": [
+   1504,
+   1004
+  ]
+ },
+ "landlord-property-planning-team": {
+  "sizes": [
+   [
+    640,
+    427
+   ],
+   [
+    1280,
+    854
+   ],
+   [
+    1920,
+    1281
+   ]
+  ],
+  "jpg": [
+   1600,
+   1068
+  ]
+ },
+ "landlord-lease-signing-handshake": {
+  "sizes": [
+   [
+    640,
+    427
+   ],
+   [
+    1280,
+    853
+   ],
+   [
+    1920,
+    1280
+   ]
+  ],
+  "jpg": [
+   1600,
+   1067
+  ]
+ },
+ "endurance-team-collaboration": {
+  "sizes": [
+   [
+    500,
+    280
+   ],
+   [
+    500,
+    280
+   ]
+  ],
+  "jpg": [
+   500,
+   280
+  ]
+ },
+ "mark-levy-research-analyst-endurance-real-estate-advisors": {
+  "sizes": [
+   [
+    600,
+    750
+   ]
+  ],
+  "jpg": [
+   600,
+   750
+  ]
+ },
+ "jim-torre-special-project-analyst-endurance-real-estate-advisors": {
+  "sizes": [
+   [
+    600,
+    750
+   ]
+  ],
+  "jpg": [
+   600,
+   750
+  ]
+ },
+ "steven-andersen-design-workplace-strategy-endurance-real-estate-advisors": {
+  "sizes": [
+   [
+    600,
+    749
+   ]
+  ],
+  "jpg": [
+   600,
+   749
+  ]
  }
 }

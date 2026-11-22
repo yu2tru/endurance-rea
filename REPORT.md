@@ -6,33 +6,63 @@
 | Deployable static site (14 pages, CSS, JS, images, sitemap.xml, robots.txt, 404.html, `_redirects`, `_headers`) | `site/` |
 | Content inventory of the old site | `content-inventory.md` |
 | New sitemap and conversion plan | `sitemap-plan.md` |
-| Generator that rebuilds every page from one source file | `tools/build.py` (run `python3 tools/build.py`) |
+| Generator that rebuilds every page | `tools/build.py` (layout and pages), `tools/articles.py`, `tools/faqs.py`, `tools/common.py`. Run `python3 tools/build.py` |
 
 **Quality checks (local, Lighthouse 12 mobile):** Home 98/100/100/100, Tenant Representation 100/100/100/100, FAQ 100/100/100/100, Contact 100/100/100/100, longest article 97/100/100/100 (Performance / Accessibility / Best Practices / SEO). Every page has exactly one H1, alt text and width/height on every image, valid JSON-LD, no broken internal links, no horizontal scroll at 390px, and no em dashes.
 
-## 1. Placeholders that need real info
-Every placeholder is shown on the page with a yellow highlight (`<mark class="ph">`), so you can find them visually or by searching the HTML for `class="ph"`. Edit the text in `tools/build.py` and re-run the build.
+## Revision 2: design and content pass
 
-| Placeholder | Page(s) | Notes |
+### Content recovered and where it went
+| Recovered from the official site | Where it is now |
+|---|---|
+| Headshots for Mark Levy, Jim Torre and Steven Andersen | About, team section (all five members now have photos) |
+| Personal LinkedIn profiles for Gregory Gang, Sergio Turaev, Mark Levy, Jim Torre | About, team cards ("LinkedIn profile"), plus `sameAs` in the Person schema |
+| Steven Andersen's card link (company page) | About, team card ("Company LinkedIn") |
+| Correct company LinkedIn URL | Footer, Contact page, LocalBusiness `sameAs` |
+| Atlas at Rockefeller Center photo (old homepage) | About hero |
+| Meeting photo (old homepage) | Home "Every assignment starts with your goals" section, Contact hero |
+| Handshake photo (old About) | FAQ hero |
+| Note-taking and handshake photos (old Tenant Advocate) | Tenant Representation page |
+| Stacked-hands photo (old Team page) | About, Careers section |
+
+### Placeholders removed
+- [ADD HEADSHOT] x3: filled with the real headshots.
+- [ADD BIO] for Gregory Gang and Sergio Turaev: no bios exist on the site (see below). The visible placeholders were removed and each card links to the person's LinkedIn profile instead.
+- [ADD TESTIMONIAL HERE]: removed. All 9 real testimonials are published, and an empty slot made the page look unfinished.
+- [CONFIRM: author] and [CONFIRM: original publish date] on articles: removed from view. Articles now show "Endurance Real Estate Advisors" and the date the site itself shows (November 20, 2026).
+
+## 1. Placeholders remaining (and why)
+I checked every page, every blog post and the builder's embedded page data. None of these facts appear anywhere on endurance-rea.com.
+
+| Placeholder | Page | Why it remains |
 |---|---|---|
-| [CONFIRM: office hours] | /contact/ | Also add `openingHoursSpecification` to the LocalBusiness schema in `build_home()` (a comment marks the spot). |
-| [CONFIRM: fee structure for tenant and landlord assignments] | /faq/ | |
-| [CONFIRM: landlord fee and commission structure] | /services/landlord-representation/ (also in that page's FAQ schema) | |
-| [CONFIRM: typical timeline from first meeting to signed lease] | /faq/ | |
+| [CONFIRM: office hours] | /contact/ | Hours are not listed anywhere. Add `openingHoursSpecification` to the schema in `build_home()` once confirmed. |
+| [CONFIRM: fee structure for tenant and landlord assignments] | /faq/ | No pricing or fee information on the site. |
+| [CONFIRM: landlord fee and commission structure] | /services/landlord-representation/ | Same. |
+| [CONFIRM: typical timeline from first meeting to signed lease] | /faq/ | Only one data point exists (75 spaces over 9 months), which is quoted in the answer. |
 | [CONFIRM: other boroughs or markets served] | /faq/ | The site only says "across NYC". |
-| [CONFIRM: New York State real estate broker license details] | /faq/ | No license info anywhere on the old site. |
-| [ADD BIO: Gregory Gang] and [ADD BIO: Sergio Turaev] | /about/ | The old site has no bios. |
-| [ADD HEADSHOT] x3 | /about/ | Mark Levy, Jim Torre, Steven Andersen have no photos. |
-| [ADD TESTIMONIAL HERE] with [Client name] and [Title, Company] | /about/ | One open slot. All 9 real testimonials are already used. |
-| [CONFIRM: author] x5 | Every article | Posts are written in the first person by a broker with 30+ years of experience (probably Gregory Gang). Once confirmed, also change the `author` in the Article schema. |
-| [CONFIRM: original publish date] x5 | Every article | The old site shows November 20, 2026 on all five posts, which looks like a re-publish date. |
+| [CONFIRM: New York State real estate broker license details] | /faq/ | No license information on the site. |
 
-**Other items to confirm (no visible placeholder):**
-- **Headshots.** Matched to names by card order on the old Team page (first card = Gregory Gang, second = Sergio Turaev).
-- **LinkedIn URL.** The old link was a broken Proofpoint-wrapped *admin* URL. The new site uses `https://www.linkedin.com/company/1560494/`.
-- **Contact form delivery.** With no service connected, the form opens the visitor's email app with the message filled in and addressed to greg.gang@endurance-rea.com. To get submissions sent straight to an inbox, set `data-endpoint` on the form in `build_contact()` to a form service (Formspree, a Cloudflare Pages Function, etc.).
-- **Newsletter.** The old site had a Constant Contact signup pop-up. It was left out because it needs a list endpoint; it can be added back.
-- **Stock photography.** The "thumbs up" group photo on About and the two Unsplash images on articles appear to be stock. Their alt text does not claim they show the Endurance team.
+**Not placeholders, but worth adding if the client has them:** short bios for each team member (none exist on the site), the real author and original publish date of each article, and a personal LinkedIn URL for Steven Andersen.
+
+**Still to set up:**
+- **Contact form delivery.** With no service connected, the form opens the visitor's email app with the message filled in and addressed to greg.gang@endurance-rea.com. To get submissions sent straight to an inbox, set `data-endpoint` on the form in `build_contact()` to a form service.
+- **Newsletter.** The old Constant Contact signup pop-up was left out because it needs a list endpoint.
+
+### Fonts chosen
+- **Headings:** Barlow Condensed (500, 600, 700). It's semi-condensed with a tall x-height and a confident, architectural feel.
+- **Body:** Barlow (400, 500, 600, italic 400), the companion family, so the type reads as one system. Body text is 18px with a 1.6 line height.
+- Loaded from Google Fonts with `display=swap`, preconnect hints and a non-blocking stylesheet load.
+
+### Design changes
+- Removed every eyebrow label, including the dash-prefixed ones.
+- Replaced card grids with editorial layouts: alternating photo and text splits, rows separated by thin dividers, and a large pull quote followed by a two-column list of testimonials. Cards remain only for team members and articles, with no borders, shadows or icons.
+- Replaced the numbered process cards with a short narrative ("Every assignment starts with your goals") beside a meeting photo.
+- Heroes are now 85vh on the home page and 62vh on inner pages. The dark gradient sits only behind the text (left side on desktop, bottom on mobile), and each photo has its own desktop and mobile focal point.
+- The palette is restrained: charcoal, warm neutrals, and the logo red as the single accent. Section spacing is larger.
+
+### Unchanged SEO and AEO work
+All titles, meta descriptions, canonical tags, Open Graph and Twitter tags, JSON-LD (LocalBusiness, Service, FAQPage, Article, BreadcrumbList, AboutPage, Blog), FAQ content, alt text, internal links, sitemap.xml, robots.txt and redirects are unchanged or expanded. Lighthouse (mobile, local): Home 97/100/100/100, About 96/100/100/100, Tenant Representation 100/100/100/100, FAQ 100/100/100/100, longest article 93/100/100/100.
 
 ## 2. Old URL to new URL redirects (301)
 These are already set up in `site/_redirects`, which Cloudflare Pages applies automatically.

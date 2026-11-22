@@ -184,3 +184,44 @@ Headshot identification is by card order (first card = Gregory Gang, second = Se
 Nothing failed to load. Notes:
 - `/blog?page=2` renders the same 3 posts client-side; the blog sitemap confirms 5 posts total, all captured.
 - The LinkedIn URL (behind urldefense.com) was not followed because it is an external admin link.
+
+---
+
+## 6. Re-crawl (revision 2, 2026-11-22)
+
+Every page was re-crawled with full scrolling, and the raw HTML (including the builder's embedded JSON data) was searched. Page text is identical to the first crawl. New findings:
+
+### Team headshots (lazy-loaded inside builder data; missed in crawl 1)
+| Person | Source ID | New file |
+|---|---|---|
+| Mark Levy | `e43a379ea5e544ed9855526a39d562c5` | `mark-levy-research-analyst-endurance-real-estate-advisors` |
+| Jim Torre | `d2112e3cbb4c47ff90b0b26e3621546d` | `jim-torre-special-project-analyst-endurance-real-estate-advisors` |
+| Steven Andersen | `75c9438870844ce1814bdfeaf1a3c20d` | `steven-andersen-design-workplace-strategy-endurance-real-estate-advisors` |
+
+Each headshot sits directly before the person's name in the builder's card data, which confirms the match.
+
+### LinkedIn links on the Team cards
+| Person | LinkedIn |
+|---|---|
+| Gregory Gang | https://www.linkedin.com/in/gregory-gang-276263a/ (wrapped in a Proofpoint urldefense link on the old site) |
+| Sergio Turaev | http://www.linkedin.com/in/sergioturaev |
+| Mark Levy | https://www.linkedin.com/in/marklevy10/ |
+| Jim Torre | https://www.linkedin.com/in/jim-torre-a67467178/ |
+| Steven Andersen | No personal profile; his button links to the company page |
+| Company | https://www.linkedin.com/company/endurance-real-estate-advisors/ (replaces the broken admin URL) |
+
+### Bios
+None exist. The builder's card data for every team member has a `description` field containing only title, email and phone, and no other page or post contains biographical text.
+
+### Additional photos
+| Source ID | Shows | Old page | New file |
+|---|---|---|---|
+| `ad6a84b49c054640bccd5664183e34de` | Atlas statue at Rockefeller Center | Home | `atlas-statue-rockefeller-center-manhattan` |
+| `80eeb0cb184d4a4985fb549111e700f2` | Team meeting at a conference table | Home | `client-strategy-meeting-nyc-office` |
+| `8f1c303568eb40d5b3937e8622543001` | Two professionals shaking hands outside an office | About, Pulse & Perspective | `handshake-commercial-lease-agreement-nyc` |
+| `a2e00a3a14514c21b25ced9801d9b2fe` | Hand taking notes beside a laptop | Tenant Advocate | `lease-review-notes-tenant-representation` |
+| `abbe1c4b06204483adb084cbf28f9809` | Handshake close-up | Tenant Advocate | `tenant-landlord-handshake-lease-signing` |
+| `6ef9755cf5b7403aab33cc8642d7025f` | Team reviewing plans, one in a hard hat | Landlord Representation | `landlord-property-planning-team` (downloaded, not used) |
+| `a8c993192f0647e0a3e88b52ef00587a` | Handshake over documents | Landlord Representation | `landlord-lease-signing-handshake` (downloaded, not used) |
+| `1e7faa83cf5a482080880fa7ab8d4a97` | Hands stacked together, overhead | Team | `endurance-team-collaboration` |
+| `09e8a2b0a59a42be8719be5eaca522f9` | 52x23 blank white image (builder spacer) | Several | Not used |
