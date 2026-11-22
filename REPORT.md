@@ -59,8 +59,9 @@ All 14 URLs loaded (HTTP 200). Notes:
 - `/blog?page=2` shows the same three posts, loaded client-side. The blog sitemap confirms there are 5 posts in total, and all 5 were captured.
 - The LinkedIn link (behind urldefense.com, pointing at an admin page) was not followed.
 
-## Deploying to Cloudflare Pages
-1. Create a Pages project connected to this repository.
-2. Framework preset: **None**. Build command: *(leave empty)*. Build output directory: **`site`**.
-3. Add the custom domain `endurance-rea.com`. The canonical tags and sitemap use `https://endurance-rea.com` without `www`, so redirect `www` to the apex.
+## Deploying to Cloudflare (Workers)
+The repo includes `wrangler.jsonc`, which serves the `site/` folder as static assets (with `_redirects`, `_headers` and the custom 404 page).
+1. In the Worker's **Settings > Builds**: Build command *empty*, Deploy command `npx wrangler deploy`, Root directory `/`, Production branch `main`.
+2. The `name` in `wrangler.jsonc` (`endurance-rea`) must match the Worker's name in the dashboard. If the build reports a name mismatch, change it there.
+3. Add the custom domain `endurance-rea.com` under the Worker's **Settings > Domains & Routes**. Canonical tags and the sitemap use `https://endurance-rea.com` without `www`, so redirect `www` to the apex.
 4. After launch, submit `https://endurance-rea.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
