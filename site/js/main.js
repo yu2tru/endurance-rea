@@ -63,3 +63,43 @@
     status.textContent = 'Your email app should open with your message ready to send. If it does not, email greg.gang@endurance-rea.com or call (646) 662-3546.';
   });
 })();
+
+// Scroll reveal: every content block fades and rises into place as it enters the viewport.
+(function () {
+  window.__reveal = true;
+  var root = document.documentElement;
+  var SEL = '.hero-body > *,.intro > *,.split > .media,.split > div:not(.media) > *,.cols > div > *,.cols > .rows > *,.stat,.q,.post,.postrow,.person,.faq-group > h2,.faqs > .faq,.narrow > h2,.narrow > p,.narrow > ul,.prose > *,.contact-grid > div > *,.contact-grid > aside > h2,.details > div,.cta .wrap > *,.section > .wrap > p';
+  var items = Array.prototype.slice.call(document.querySelectorAll('main :is(' + SEL + ')'));
+  var show = function (el) { el.classList.add('is-visible'); };
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach(show); return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    var step = 0;
+    entries.filter(function (e) { return e.isIntersecting; })
+      .sort(function (a, b) { return a.target.compareDocumentPosition(b.target) & 4 ? -1 : 1; })
+      .forEach(function (e) {
+        e.target.style.setProperty('--step', Math.min(step++, 4));
+        show(e.target);
+        io.unobserve(e.target);
+      });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+  items.forEach(function (el) { io.observe(el); });
+  // Clear the stagger delay after the entrance so hover transitions stay instant.
+  items.forEach(function (el) {
+    el.addEventListener('transitionend', function (ev) {
+      if (ev.target === el && ev.propertyName === 'opacity') el.style.removeProperty('--step');
+    });
+  });
+})();
+
+// FAQ: only one answer open at a time (native details[name] plus a fallback for older browsers).
+(function () {
+  var faqs = Array.prototype.slice.call(document.querySelectorAll('details.faq'));
+  faqs.forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (!d.open) return;
+      faqs.forEach(function (o) { if (o !== d && o.open) o.open = false; });
+    });
+  });
+})();

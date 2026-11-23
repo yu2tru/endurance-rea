@@ -12,7 +12,7 @@ from articles import ARTICLES
 from faqs import TENANT_FAQ, LANDLORD_FAQ, FAQ
 
 BUILD_DATE = date.today().isoformat()
-V = '2'  # asset version for cache busting
+V = '3'  # asset version for cache busting
 FONTS = 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap'
 PAGES = []
 ARROW = ICON['arrow']
@@ -189,6 +189,7 @@ def page(path, title, desc, body, schemas=(), trail=None, og_image=None, og_type
 <link rel="stylesheet" href="{FONTS}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="{FONTS}"></noscript>
 <link rel="stylesheet" href="/css/style.css?v={V}">
+<script>document.documentElement.classList.add('js');setTimeout(function(){{if(!window.__reveal)document.documentElement.classList.add('reveal-off')}},3000)</script>
 {schema_tags}
 </head>
 <body>
@@ -224,16 +225,20 @@ T = {
 }
 
 
-def pull(key=None, quote=None, name=None, role=None, photo=None):
-    if key:
-        quote, name, role = T[key]
-    pic = img(photo, f'{name}, {role}', sizes='76px') if photo else ''
+def pull(key=None, quote=None, name=None, role=None, photo=None, large=False):
+    if key:  # client testimonial: featured message card
+        q, n, r = T[key]
+        return (f'<figure class="q q-feature"><blockquote><p>“{esc(q)}”</p></blockquote>'
+                f'<figcaption><b>{esc(n)}</b><span>{esc(r)}</span></figcaption></figure>')
+    pic = img(photo, f'{name}, {role}', sizes='160px' if large else '76px') if photo else ''
     cls = 'pull long' if len(quote) > 160 else 'pull'
+    if large:
+        cls += ' lg'
     return f'<figure class="{cls}"><blockquote><p>“{esc(quote)}”</p></blockquote><figcaption>{pic}<span><b>{esc(name)}</b>{esc(role)}</span></figcaption></figure>'
 
 
 def quotes(*keys):
-    items = ''.join(f'<figure class="q"><blockquote><p>“{esc(T[k][0])}”</p></blockquote><figcaption><b>{esc(T[k][1])}</b>, {esc(T[k][2])}</figcaption></figure>' for k in keys)
+    items = ''.join(f'<figure class="q"><blockquote><p>“{esc(T[k][0])}”</p></blockquote><figcaption><b>{esc(T[k][1])}</b><span>{esc(T[k][2])}</span></figcaption></figure>' for k in keys)
     return f'<div class="quotes">{items}</div>'
 
 
@@ -252,7 +257,7 @@ def split(media, text, rev=False, cls=''):
 
 
 def faq_block(items):
-    out = ''.join(f'<details class="faq"><summary><h3>{esc(q)}</h3></summary><div class="a">{a}</div></details>' for q, a in items)
+    out = ''.join(f'<details class="faq" name="faq"><summary><h3>{esc(q)}</h3></summary><div class="a">{a}</div></details>' for q, a in items)
     return f'<div class="faqs">{out}</div>'
 
 
@@ -345,7 +350,7 @@ def build_home():
 <section class="section dark">
   <div class="wrap cols">
     <div>
-      {pull(quote='Our sole fiduciary duty is to protect the interests of our clients, and we strive to do it better than anyone else in the business.', name='Gregory Gang', role='Founder & Principal', photo='gregory-gang-founder-endurance-real-estate-advisors')}
+      {pull(quote='Our sole fiduciary duty is to protect the interests of our clients, and we strive to do it better than anyone else in the business.', name='Gregory Gang', role='Founder & Principal', photo='gregory-gang-founder-endurance-real-estate-advisors', large=True)}
       <p style="margin-top:36px"><a class="btn btn-light" href="/about/#team">Meet the Team</a></p>
     </div>
     <div>
@@ -642,7 +647,7 @@ def build_about():
   <div class="wrap">
     <div class="cols">
       <div><h2>Meet the team</h2><p class="lead">Five people covering brokerage, research, special projects, and design and workplace strategy.</p></div>
-      {pull(quote='Working closely with our clients to establish short and long-term goals and objectives is essential to our clients’ success.', name='Sergio Turaev', role='Director', photo='sergio-turaev-director-endurance-real-estate-advisors')}
+      {pull(quote='Working closely with our clients to establish short and long-term goals and objectives is essential to our clients’ success.', name='Sergio Turaev', role='Director')}
     </div>
     <div class="team">{''.join(people)}</div>
   </div>

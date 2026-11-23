@@ -1,6 +1,10 @@
 /* Endurance Real Estate Advisors
    Type: Barlow Condensed (headings) + Barlow (body), Google Fonts.
    Palette: charcoal ink, warm neutrals, one accent red taken from the logo. */
+/* Metric-matched fallbacks: local Arial scaled to Barlow's widths, so text wraps the same
+   before and after the web fonts load (prevents layout shift). */
+@font-face{font-family:"Barlow Condensed Fallback";src:local("Arial"),local("Helvetica"),local("Liberation Sans"),local("Arimo");size-adjust:73.5%;ascent-override:118%;descent-override:30%}
+@font-face{font-family:"Barlow Fallback";src:local("Arial"),local("Helvetica"),local("Liberation Sans"),local("Arimo");size-adjust:95.5%;ascent-override:96%;descent-override:20%}
 :root{
   --ink:#17191c;
   --ink-soft:#24272b;
@@ -17,8 +21,8 @@
   --on-dark-muted:#bdbab4;
   --max:1200px;
   --narrow:760px;
-  --head:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
-  --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --head:"Barlow Condensed","Barlow Condensed Fallback",sans-serif;
+  --body:"Barlow","Barlow Fallback",sans-serif;
   --space:clamp(88px,11vw,152px);
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -44,15 +48,18 @@ li{margin-bottom:.45em}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 mark.ph{background:#fff1a8;color:#3b3100;padding:.05em .35em;border-radius:3px;font-weight:600;font-size:.9em}
 
-/* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:50px;padding:.8rem 1.6rem;font-family:var(--body);font-weight:600;font-size:1rem;letter-spacing:.01em;text-decoration:none;border:1.5px solid transparent;border-radius:2px;cursor:pointer;transition:background .15s,color .15s,border-color .15s;line-height:1.2}
-.btn svg{width:18px;height:18px;flex:none}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:var(--accent-dark);color:#fff}
-.btn-light{border-color:rgba(255,255,255,.8);color:#fff;background:transparent}
-.btn-light:hover{background:#fff;color:var(--ink)}
-.btn-dark{border-color:var(--ink);color:var(--ink);background:transparent}
-.btn-dark:hover{background:var(--ink);color:#fff}
+/* Buttons: outlined, red type. On dark backgrounds the primary is white with red type. */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:50px;padding:.8rem 1.6rem;font-family:var(--body);font-weight:600;font-size:1rem;letter-spacing:.02em;text-decoration:none;border:1.5px solid transparent;border-radius:2px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;line-height:1.2}
+.btn svg{width:18px;height:18px;flex:none;transition:transform .2s}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:transparent;border-color:var(--ink);color:var(--accent)}
+.btn-primary:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn-dark{border-color:rgba(23,25,28,.35);color:var(--ink);background:transparent}
+.btn-dark:hover{border-color:var(--ink);background:var(--ink);color:#fff}
+.btn-light{border-color:rgba(255,255,255,.7);color:#fff;background:transparent}
+.btn-light:hover{background:#fff;border-color:#fff;color:var(--ink)}
+.hero .btn-primary,.dark .btn-primary,.site-header .btn-primary,.mbar .btn-primary{background:#fff;border-color:#fff;color:var(--accent)}
+.hero .btn-primary:hover,.dark .btn-primary:hover,.site-header .btn-primary:hover,.mbar .btn-primary:hover{background:transparent;border-color:#fff;color:#fff}
 .more{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;text-decoration:none;color:var(--accent)}
 .more svg{width:18px;height:18px;transition:transform .15s}
 .more:hover svg{transform:translateX(3px)}
@@ -180,24 +187,33 @@ body{padding-bottom:64px}
   .stat:first-child{border-left:0;padding-left:0}
 }
 
-/* Pull quote and testimonials */
+/* Pull quotes (founder and team) */
 .pull{margin:0}
 .pull blockquote{margin:0}
-.pull blockquote p{font-family:var(--head);font-weight:500;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.2;color:var(--ink);margin:0 0 .7em;max-width:30ch}
+.pull blockquote p{font-family:var(--head);font-weight:500;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.2;color:var(--ink);margin:0 0 .8em;max-width:30ch}
+.pull.long blockquote p{font-size:clamp(1.45rem,2.3vw,1.9rem);line-height:1.3;max-width:44ch}
 .dark .pull blockquote p{color:#fff}
 .pull figcaption{display:flex;align-items:center;gap:18px;color:var(--muted)}
 .dark .pull figcaption{color:var(--on-dark-muted)}
 .pull figcaption img{width:76px;height:95px;object-fit:cover}
-.pull figcaption b{display:block;color:var(--ink);font-weight:600}
+.pull.lg figcaption{gap:24px}
+.pull.lg figcaption img{width:152px;height:190px}
+.pull figcaption b{display:block;color:var(--ink);font-weight:600;font-size:1.1rem}
 .dark .pull figcaption b{color:#fff}
-.pull.long blockquote p{font-size:clamp(1.45rem,2.3vw,1.9rem);line-height:1.3;max-width:44ch}
-.quotes{display:grid;gap:0;margin-top:clamp(56px,7vw,88px);border-top:1px solid var(--line)}
-@media (min-width:800px){.quotes{grid-template-columns:1fr 1fr;column-gap:72px}}
-.q{margin:0;padding:32px 0;border-bottom:1px solid var(--line)}
-.q blockquote{margin:0 0 14px}
-.q blockquote p{margin:0;font-size:1.15rem;color:var(--text)}
-.q figcaption{font-size:1rem;color:var(--muted)}
-.q figcaption b{color:var(--ink);font-weight:600}
+
+/* Client testimonials: message cards */
+.q{margin:0;display:flex;flex-direction:column}
+.q blockquote{position:relative;margin:0 0 26px;padding:30px 30px 28px;background:var(--warm);border:1px solid var(--line);border-radius:18px 18px 18px 4px;flex:1}
+.q blockquote::after{content:"";position:absolute;left:34px;bottom:-9px;width:16px;height:16px;background:inherit;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.q blockquote p{margin:0;font-size:1.12rem;line-height:1.6;color:var(--text)}
+
+.q figcaption{padding-left:30px;font-size:1rem;color:var(--muted);line-height:1.4}
+.q figcaption b{display:block;color:var(--ink);font-weight:600}
+.warm .q blockquote,.cta .q blockquote{background:#fff}
+.q-feature blockquote{padding:clamp(32px,4vw,52px)}
+.q-feature blockquote p{font-family:var(--head);font-weight:500;font-size:clamp(1.45rem,2.4vw,1.95rem);line-height:1.3;color:var(--ink);max-width:56ch}
+.quotes{display:grid;gap:36px;margin-top:40px}
+@media (min-width:800px){.quotes{grid-template-columns:1fr 1fr;gap:40px 32px}}
 
 /* Articles */
 .posts{display:grid;gap:48px}
@@ -255,7 +271,7 @@ body{padding-bottom:64px}
 /* Closing call to action */
 .cta{background:var(--stone)}
 .cta .wrap{display:grid;gap:32px;padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px)}
-@media (min-width:900px){.cta .wrap{grid-template-columns:1.4fr 1fr;align-items:end;gap:80px}}
+@media (min-width:900px){.cta .wrap{grid-template-columns:1fr auto;align-items:end;gap:80px}.cta .btns{flex-wrap:nowrap}}
 .cta h2{margin-bottom:.3em;max-width:18ch}
 .cta p{margin:0;color:var(--muted);max-width:52ch}
 .cta .btns{display:flex;flex-wrap:wrap;gap:12px}
@@ -297,3 +313,10 @@ body{padding-bottom:64px}
 .social svg{width:18px;height:18px;fill:#fff}
 .fbottom{border-top:1px solid var(--line-dark);margin-top:56px;padding-top:24px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:.92rem}
 @media (min-width:1100px){.team{grid-template-columns:repeat(5,1fr);gap:48px 28px}}
+
+/* Scroll reveal (same feel as longrunsystems.com): 10px rise and fade over 1.2s, staggered
+   0.12s within a group. Hidden only when JS runs (html.js is set in <head>); main.js adds
+   .is-visible as each block enters the viewport. html.reveal-off is the failsafe. */
+.js main :is(.hero-body > *,.intro > *,.split > .media,.split > div:not(.media) > *,.cols > div > *,.cols > .rows > *,.stat,.q,.post,.postrow,.person,.faq-group > h2,.faqs > .faq,.narrow > h2,.narrow > p,.narrow > ul,.prose > *,.contact-grid > div > *,.contact-grid > aside > h2,.details > div,.cta .wrap > *,.section > .wrap > p){opacity:0;transform:translate3d(0,10px,0);transition:opacity 1.2s cubic-bezier(.22,.61,.36,1),transform 1.2s cubic-bezier(.22,.61,.36,1);transition-delay:calc(var(--step,0) * .12s)}
+.js main .is-visible,.reveal-off main *{opacity:1!important;transform:none!important}
+@media (prefers-reduced-motion:reduce){.js main *{opacity:1!important;transform:none!important;transition:none!important}}
